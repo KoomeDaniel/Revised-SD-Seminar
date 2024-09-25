@@ -6,25 +6,19 @@ tableextension 50100 "CSD ResourceExt" extends Resource
     {
         modify("Profit %")
         {
-            trigger OnAfterValidate()
+            trigger OnAfterValidate()//Validation typically occurs when a user enters or changes the value of the field and then moves to another field or saves the record.
             begin
-                Rec.TestField("Unit Cost");
+                Rec.TestField("Unit Cost");// If the “Unit Cost” field is empty or zero, an error will be raised, and the user will be prompted to enter a valid value.
             end;
         }
         // This modifies the existing field "Profit %" and adds a validation trigger that ensures
         // the "Unit Cost" field is filled (i.e., not blank or zero) after the user modifies "Profit %".
 
-        // modify(Type)
-        // {
-        //     OptionCaption = 'Instructor/Room';
-        // }
-        // The commented-out code was likely meant to modify the "Type" field to provide new option captions.
-
         field(50101; "CSD Resource Type"; Option)
         {
             caption = 'Resource Type';
-            OptionMembers = "Interal","External";
-            OptionCaption = 'Internal,External';
+            OptionMembers = "Internal","External";// This defines the possible values for the option field. In this case, the field can have either "Interal" or "External" as its value.
+            OptionCaption = 'Internal,External';//This sets the display captions for the option members. These are the values that users will see in the dropdown list for this field. 
         }
         // Adds a new field "CSD Resource Type" (ID 50101) with an option type, where the user can select either
         // "Internal" or "External". The captions for these options are also provided.
