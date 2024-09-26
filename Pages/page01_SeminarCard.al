@@ -79,8 +79,8 @@ page 50101 "CSD SEMINAR CARD"
             {
                 action("Co&mments")//Defines an action with the label “Comments”. The & character creates a keyboard shortcut (Alt + M) for this action.
                 {
-                    //RunObject=page "CSD Seminar Comment Sheet";//specify that the action should open the “CSD Seminar Comment Sheet” page when executed.
-                    // RunPageLink = "Table Name"=const(Seminar),"No."=field("No.");//link the current record to the “CSD Seminar Comment Sheet” page, filtering it by the “Table Name” and “No.” fields.
+                    RunObject = page "CSD Seminar Comment Sheet";//specify that the action should open the “CSD Seminar Comment Sheet” page when executed.
+                    RunPageLink = "Table Name" = const("Seminar"), "No." = field("No.");//link the current record to the “CSD Seminar Comment Sheet” page, filtering it by the “Table Name” and “No.” fields.
                     Image = Comment;//Specifies the icon to be used for the action. In this case, it uses the “Comment” icon.
                     Promoted = true;//Indicates that this action should be promoted, meaning it will be more prominently displayed in the user interface.
                     PromotedIsBig = true;//Specifies that the promoted action should be displayed with a larger icon.

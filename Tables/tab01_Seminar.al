@@ -60,12 +60,9 @@ table 50101 "CSD SEMINAR"
         field(90; comment; Boolean)
         {
             Caption = 'comment';
-            DataClassification = ToBeClassified;
             Editable = false;
-            //FieldClass=FlowField;
-            //CalcFormula=exist("Seminar Comment Line" 
-            //where("Table Name"= const("Seminar"), 
-            // "No."=Field("No.")));
+            FieldClass = FlowField;
+            CalcFormula = exist("Csd Seminar Comment Line" where("Table Name" = const("Seminar"), "No." = Field("No.")));//defines the calculation formula for the FlowField. It checks for the existence of records in the “Csd Seminar Comment Line” table where the “Table Name” is “Seminar” and the “No.” field matches the current record’s “No.” field.
         }
         field(100; "Seminar Price"; Decimal)
         {
@@ -141,7 +138,7 @@ table 50101 "CSD SEMINAR"
 
     trigger OnDelete()
     begin
-        // CommentLine.Reset;
+        //CommentLine.Reset;
         // CommentLine.SetRange("Table Name", 
         // CommentLine."Table Name"::Seminar); 
         // CommentLine.SetRange("No.","No.");
