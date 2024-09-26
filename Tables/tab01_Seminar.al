@@ -2,8 +2,8 @@ table 50101 "CSD SEMINAR"
 {
     DataClassification = ToBeClassified;// is used to categorize the data for privacy and security purposes.
     Caption = 'Seminar';
-    LookupPageId = 50101;//This specifies the ID of the lookup page that will be used to display the list of seminars. In this case, it’s the “CSD Seminar List” page with ID 50102.
-    DrillDownPageId = 50101;//This specifies the ID of the drill-down page that will be used to display detailed information about a specific seminar. In this case, it’s the “CSD Seminar List” page with ID 50102.
+    LookupPageId = "CSD Seminar List";//This specifies the ID of the lookup page that will be used to display the list of seminars. In this case, it’s the “CSD Seminar List” page .
+    DrillDownPageId = "CSD Seminar List";//This specifies the ID of the drill-down page that will be used to display detailed information about a specific seminar. In this case, it’s the “CSD Seminar List” page with ID 50102.
 
     fields
     {

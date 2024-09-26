@@ -1,7 +1,7 @@
 page 50102 "CSD Seminar List"
 {
     Caption = 'Seminar List';
-    CardPageId = 50101;
+    CardPageId = 50101;//links a list page to a card page. 
     PageType = List;
     UsageCategory = Lists;
     SourceTable = "CSD SEMINAR";
