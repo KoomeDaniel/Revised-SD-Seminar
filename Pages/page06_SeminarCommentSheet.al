@@ -4,7 +4,7 @@ page 50106 "CSD Seminar comment sheet"
     PageType = List;
     ApplicationArea = All;
     UsageCategory = Lists;
-    SourceTable = "Csd Seminar Comment Line";
+    SourceTable = "CSD COMMENT LINE";
 
     layout
     {
@@ -26,4 +26,10 @@ page 50106 "CSD Seminar comment sheet"
         }
 
     }
+    trigger OnOpenPage()
+
+
+    begin
+        Rec.SetUpNewLine();
+    end;
 }

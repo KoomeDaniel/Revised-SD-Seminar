@@ -45,6 +45,13 @@ table 50101 "CSD SEMINAR"
         {
             Caption = 'Search Name';
             DataClassification = ToBeClassified;
+            trigger OnValidate()
+            begin
+                if ("Search Name" = UpperCase(xRec.Name))
+                    or ("Search Name" = '') then begin
+                    "Search Name" := Name;
+                end;
+            end;
         }
         field(70; Blocked; Boolean)
         {
@@ -62,7 +69,7 @@ table 50101 "CSD SEMINAR"
             Caption = 'comment';
             Editable = false;
             FieldClass = FlowField;
-            CalcFormula = exist("Csd Seminar Comment Line" where("Table Name" = const("Seminar"), "No." = Field("No.")));//defines the calculation formula for the FlowField. It checks for the existence of records in the “Csd Seminar Comment Line” table where the “Table Name” is “Seminar” and the “No.” field matches the current record’s “No.” field.
+            CalcFormula = exist("CSD COMMENT LINE" where("Document Type." = const("Seminar"), "No." = Field("No.")));//defines the calculation formula for the FlowField. It checks for the existence of records in the “Csd Seminar Comment Line” table where the “Table Name” is “Seminar” and the “No.” field matches the current record’s “No.” field.
         }
         field(100; "Seminar Price"; Decimal)
         {
@@ -119,6 +126,7 @@ table 50101 "CSD SEMINAR"
     var
         SeMinarSetup: Record "CSD SEMINAR SETUP";
         Seminar: Record "CSD SEMINAR";
+        CommentLine: Record "CSD COMMENT LINE";
         GenProdPostingGroup: Record "Gen. Product Posting Group";
         NoSeriesMgt: Codeunit NoSeriesManagement;
 
@@ -138,11 +146,11 @@ table 50101 "CSD SEMINAR"
 
     trigger OnDelete()
     begin
-        //CommentLine.Reset;
-        // CommentLine.SetRange("Table Name", 
-        // CommentLine."Table Name"::Seminar); 
-        // CommentLine.SetRange("No.","No.");
-        // CommentLine.DeleteAll;
+        CommentLine.Reset;
+        CommentLine.SetRange("Document Type.",
+        CommentLine."Document Type."::Seminar);
+        CommentLine.SetRange("No.", "No.");
+        CommentLine.DeleteAll;
     end;
 
     trigger OnRename()

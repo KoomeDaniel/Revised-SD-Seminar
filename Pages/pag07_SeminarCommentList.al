@@ -4,7 +4,7 @@ page 50107 "CSD Seminar comment list"
     PageType = List;
     ApplicationArea = All;
     UsageCategory = Lists;
-    SourceTable = "Csd Seminar Comment Line";
+    SourceTable = "CSD COMMENT LINE";
     Editable = false;
 
     layout

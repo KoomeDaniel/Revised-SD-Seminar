@@ -14,19 +14,19 @@ table 50100 "CSD SEMINAR SETUP"
         {
             Caption = 'Seminar Nos.';
             DataClassification = ToBeClassified;
-            TableRelation = "No. Series";
+
         }
         field(30; "Seminar Registration Nos."; Code[20])
         {
             Caption = 'Seminar Registration Nos.';
             DataClassification = ToBeClassified;
-            TableRelation = "No. Series";
+
         }
         field(40; "Posted Seminar Reg. Nos."; Code[20])
         {
             Caption = 'Posted Seminar Reg. Nos.';
             DataClassification = ToBeClassified;
-            TableRelation = "No. Series";
+
         }
     }
 
@@ -37,5 +37,10 @@ table 50100 "CSD SEMINAR SETUP"
             Clustered = true;
         }
     }
+    trigger OnInsert()
+    begin
+        if "Seminar Registration Nos." = '' then
+            "Seminar Registration Nos." := 'SR-0001';
+    end;
 
 }
