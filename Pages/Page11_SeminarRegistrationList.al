@@ -101,7 +101,10 @@ page 50111 "CSD Seminar Registration List"
                     ApplicationArea = All;
                     Image = PostDocument;
                     Promoted = true;
-                    RunObject = codeunit "Seminar Post YESNO";
+                    PromotedIsBig = true;
+                    PromotedCategory = Process;
+                    ShortcutKey = F9;
+                    RunObject = codeunit "CSD Seminar PostYesNo";
                 }
             }
         }

@@ -14,18 +14,19 @@ table 50100 "CSD SEMINAR SETUP"
         {
             Caption = 'Seminar Nos.';
             DataClassification = ToBeClassified;
-
+            TableRelation = "No. Series";
         }
         field(30; "Seminar Registration Nos."; Code[20])
         {
             Caption = 'Seminar Registration Nos.';
             DataClassification = ToBeClassified;
-
+            TableRelation = "No. Series";
         }
         field(40; "Posted Seminar Reg. Nos."; Code[20])
         {
             Caption = 'Posted Seminar Reg. Nos.';
             DataClassification = ToBeClassified;
+            TableRelation = "No. Series";
 
         }
     }
