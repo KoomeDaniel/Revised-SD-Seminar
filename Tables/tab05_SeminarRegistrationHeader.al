@@ -94,7 +94,7 @@ table 50105 "CSD Registration Header"
         {
             Caption = 'Room Resource No.';
             DataClassification = ToBeClassified;
-            TableRelation = Resource where(Type = const(Room));
+            TableRelation = Resource where(Type = const(Machine));
             trigger OnValidate()
             var
                 SeminarRoom: Record Resource;

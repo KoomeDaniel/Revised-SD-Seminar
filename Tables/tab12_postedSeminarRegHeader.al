@@ -63,7 +63,7 @@ table 50112 "CSD Posted Seminar RegHeader"
         {
             Caption = 'Room Resource No.';
             DataClassification = CustomerContent;
-            TableRelation = Resource where(Type = const(Room));
+            TableRelation = Resource where(Type = const(Machine));
 
         }
         field(12; "Room Name"; Text[100])

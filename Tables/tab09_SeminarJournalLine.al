@@ -101,7 +101,7 @@ table 50109 "CSD Seminar Journal Line"
         {
             Caption = 'Room Resource No.';
             DataClassification = ToBeClassified;
-            TableRelation = Resource where(Type = const(Room));
+            TableRelation = Resource where(Type = const(Machine));
         }
         field(19; "Instructor Resource No."; code[20])
         {
