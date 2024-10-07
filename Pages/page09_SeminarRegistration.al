@@ -186,7 +186,7 @@ page 50109 "CSD Seminar Registration"
                     ApplicationArea = All;
                     Image = PostDocument;
                     Promoted = true;
-                    // RunObject = codeunit ad_SeminarPostYesNo;
+                    RunObject = codeunit "CSD Seminar PostYesNo";
                 }
             }
         }

@@ -75,7 +75,7 @@ page 50101 "CSD SEMINAR CARD"
     }
     actions
     {
-        area(Creation)
+        area(Processing)
         {
             action("Seminar Re&gistration")
             {
@@ -84,6 +84,7 @@ page 50101 "CSD SEMINAR CARD"
                 Image = NewTimesheet;
                 Promoted = true;
                 PromotedCategory = New;
+                ShortcutKey = "Ctrl+F7";
                 RunObject = page "CSD Seminar Registration";
                 RunPageLink = "Seminar No." = field("No.");
                 RunPageMode = Create;
@@ -95,16 +96,16 @@ page 50101 "CSD SEMINAR CARD"
 
             {
                 Caption = '&Seminar';
-                //     action("Ledger E&ntries")
-                //     {
-                //         Caption = 'Ledger E&ntries';
-                //         ApplicationArea = All;
-                //         Image = WarrantyLedger;
-                //         Promoted = true;
-                //         PromotedCategory = Process;
-                //         RunObject = page ad_SeminarLedgerEntries;
-                //         RunPageLink = "Seminar No." = field("No.");
-                //     }
+                action("Ledger E&ntries")
+                {
+                    Caption = 'Ledger E&ntries';
+                    ApplicationArea = All;
+                    Image = WarrantyLedger;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    RunObject = page "CSD Ledger Entries";
+                    RunPageLink = "Seminar No." = field("No.");
+                }
                 action("Co&mments")//Defines an action with the label “Comments”. The & character creates a keyboard shortcut (Alt + M) for this action.
                 {
                     RunObject = page "CSD Seminar Comment Sheet";//specify that the action should open the “CSD Seminar Comment Sheet” page when executed.

@@ -75,8 +75,8 @@ page 50102 "CSD Seminar List"
                     Image = WarrantyLedger;
                     Promoted = true;
                     PromotedCategory = Process;
-                    // RunObject = page ad_SeminarLedgerEntries;
-                    // RunPageLink = "Seminar No." = field("No.");
+                    RunObject = page "CSD Ledger Entries";
+                    RunPageLink = "Seminar No." = field("No.");
                 }
                 action("Co&mments")//Defines an action with the label “Comments”. The & character creates a keyboard shortcut (Alt + M) for this action.
                 {

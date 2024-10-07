@@ -1,11 +1,11 @@
 page 50118 "CSD Posted Seminar Reg. Header"
 {
     Caption = 'Posted Seminar Registration';
+
     PageType = Document;
     ApplicationArea = All;
     UsageCategory = Lists;
     SourceTable = "CSD Registration Header";
-
     layout
     {
         area(Content)
@@ -179,8 +179,7 @@ page 50118 "CSD Posted Seminar Reg. Header"
                     ApplicationArea = All;
                     Image = PostDocument;
                     Promoted = true;
-                    // Uncomment and set the RunObject if needed
-                    // RunObject = codeunit ad_SeminarPostYesNo;
+                    RunObject = codeunit "CSD Seminar PostYesNo";
                 }
                 action("&Navigate")
                 {

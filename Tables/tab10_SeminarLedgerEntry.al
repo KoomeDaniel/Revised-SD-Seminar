@@ -2,8 +2,8 @@ table 50110 "CSD Seminar Ledger Entry"
 {
     Caption = 'Seminar Ledger Entry';
     DataClassification = ToBeClassified;
-    // LookupPageId = ad_SeminarLedgerEntries;
-    // DrillDownPageId = ad_SeminarLedgerEntries;
+    LookupPageId = "CSD Ledger Entries";
+    DrillDownPageId = "CSD Ledger Entries";
 
 
     fields
