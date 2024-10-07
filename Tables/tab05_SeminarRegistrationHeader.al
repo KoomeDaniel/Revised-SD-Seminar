@@ -267,6 +267,12 @@ table 50105 "CSD Registration Header"
             Caption = 'Posting No.';
             DataClassification = ToBeClassified;
         }
+        field(29; "No. Printed"; Integer)
+        {
+            Caption = 'No. Printed';
+            Editable = false;
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys
