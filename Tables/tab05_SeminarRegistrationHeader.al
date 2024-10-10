@@ -281,7 +281,7 @@ table 50105 "CSD Registration Header"
         {
             Clustered = true;
         }
-        key(IDEX2; "Room Resource No.")
+        key(Key2; "Room Resource No.")
         {
             SumIndexFields = Duration;
         }

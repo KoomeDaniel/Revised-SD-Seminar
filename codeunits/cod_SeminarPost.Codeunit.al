@@ -68,7 +68,7 @@ codeunit 50140 "CSD Seminar Post"
         SourceCode := SourceCodeSetup."CSD Seminar";
 
         PstdSeminarRegHeader.INIT;
-        PstdSeminarRegHeader.TRANSFERFIELDS(SeminarRegHeader);
+        PstdSeminarRegHeader.TRANSFERFIELDS(SeminarRegHeader, false);
         PstdSeminarRegHeader."No." := Rec."Posting No.";
         PstdSeminarRegHeader."No. Series" := Rec."Posting No. Series";
         PstdSeminarRegHeader."Source Code" := SourceCode;

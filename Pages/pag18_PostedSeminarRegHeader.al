@@ -5,7 +5,7 @@ page 50118 "CSD Posted Seminar Reg. Header"
     PageType = Document;
     ApplicationArea = All;
     UsageCategory = Lists;
-    SourceTable = "CSD Registration Header";
+    SourceTable = "CSD Posted Seminar RegHeader";
     layout
     {
         area(Content)
@@ -92,7 +92,7 @@ page 50118 "CSD Posted Seminar Reg. Header"
                 {
                     ApplicationArea = All;
                 }
-                field("Room Country/Region Code"; Rec."Room Country/Region Code")
+                field("Room Country/Reg. Code"; Rec."Room Country/Reg. Code")
                 {
                     ApplicationArea = All;
                 }

@@ -41,7 +41,7 @@ table 50110 "CSD Seminar Ledger Entry"
         field(7; "Entry Type"; Option)
         {
             Caption = 'Entry Type';
-            OptionMembers = "Posting Accounts","Total Accounts",Formula,"Set Base For Percent","Cost Type","Cost Type Total","Cash Flow Entry Accounts","Cash Flow Total Accounts","Account Category";
+            OptionMembers = Registration,Cancelation;
             DataClassification = CustomerContent;
         }
         field(8; "Document No."; Code[20])
@@ -62,7 +62,7 @@ table 50110 "CSD Seminar Ledger Entry"
         field(11; "Charge Type"; Option)
         {
             Caption = 'Charge Type';
-            OptionMembers = "Posting Accounts","Total Accounts",Formula,"Set Base For Percent","Cost Type","Cost Type Total","Cash Flow Entry Accounts","Cash Flow Total Accounts","Account Category";
+            OptionMembers = Instructor,Room,Participant,Charge;
             DataClassification = CustomerContent;
         }
         field(12; Type; Option)
