@@ -56,11 +56,6 @@ table 50108 "CSD COMMENT LINE"
         }
     }
 
-    fieldgroups
-    {
-        // Add changes to field groups here
-    }
-
     var
         myInt: Integer;
 

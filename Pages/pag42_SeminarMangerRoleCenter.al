@@ -37,6 +37,7 @@ page 50142 "Seminar Manager Role Center"
 
         area(Embedding)
         {
+
             action(SeminarRegistrations)
             {
                 Caption = 'Seminar Registrations';
@@ -55,12 +56,14 @@ page 50142 "Seminar Manager Role Center"
             {
                 Caption = 'Instructors';
                 RunObject = page "Resource List";
+                RunPageLink = Type = CONST(Person);
                 ToolTip = 'view all resources registeres as persons';
             }
             action(Rooms)
             {
                 Caption = 'Rooms';
                 RunObject = page "Resource List";
+                RunPageLink = Type = CONST(Machine);
                 ToolTip = 'View all resources registered as Machines';
             }
             action("sales Invoices")
@@ -80,6 +83,77 @@ page 50142 "Seminar Manager Role Center"
         }
         area(Sections)
         {
+            group(Seminar)
+            {
+                Caption = 'Seminar';
+                ToolTip = 'View and edit seminar information';
+                action("Seminar Setup")
+                {
+                    Caption = 'Seminar Setup';
+                    ToolTip = 'View and edit seminar setup information';
+                    Image = Setup;
+                    RunObject = page "CSD Seminar Setup";
+                }
+                action("Seminar List")
+                {
+                    Caption = 'Seminar List';
+                    Image = ListPage;
+                    RunObject = page "CSD Seminar List";
+                    ToolTip = 'Open the list of seminars';
+                }
+                action("Seminar Charges")
+                {
+                    Caption = 'Seminar Charges';
+                    Image = Cost;
+                    RunObject = page "CSD Seminar Charge";
+                    ToolTip = 'Open the list of seminar charges';
+                }
+                action("My Seminars")
+                {
+                    Caption = 'My Seminars';
+                    Image = List;
+                    RunObject = page "CSD My Seminar";
+                    ToolTip = 'Open the Available seminars';
+                }
+                action("Seminar Comments")
+                {
+                    Caption = 'Seminar comment';
+                    ToolTip = 'View and edit list of comments on seminars';
+                    Image = Comment;
+                    RunObject = page "CSD Seminar comment list";
+                }
+
+                action("Seminar Ledger Entries")
+                {
+                    Caption = 'Seminar Ledger Entries';
+                    Image = LedgerEntries;
+                    ToolTip = 'View the ledger entries for seminars';
+                    RunObject = page "CSD Ledger Entries";
+                }
+
+
+            }
+            group(Resources)
+            {
+                Caption = 'Resources';
+                ToolTip = 'view and edit available resources(instructors and rooms)';
+                action(Instructor)
+                {
+                    Caption = 'Instructors';
+                    ToolTip = 'View and edit instructor information';
+                    Image = Employee;
+                    RunObject = page "Resource List";
+                    RunPageLink = Type = CONST(Person);
+                }
+                action(Room)
+                {
+                    Caption = 'Rooms';
+                    ToolTip = 'View and edit room information';
+                    Image = Resource;
+                    RunObject = page "Resource List";
+                    RunPageLink = Type = CONST(Machine);
+                }
+            }
             group("Posted Documents")
             {
                 Caption = 'Posted Documents';
@@ -117,6 +191,27 @@ page 50142 "Seminar Manager Role Center"
                     Image = PostedShipment;
                 }
             }
+            group("Seminar Reports")
+            {
+                Caption = 'Seminar Reports';
+                ToolTip = 'View reports for seminar registrations and sales';
+                action("Seminar Registration Report")
+                {
+                    Caption = 'Seminar Registration Report';
+                    Image = Report;
+                    RunObject = report "Seminar Reg. Participant List";
+                    ToolTip = 'Open the Seminar Registration Report Selection';
+                }
+                action("Create Seminar Invoices")
+                {
+                    Caption = 'Create Seminar Invoices';
+                    Image = Invoice;
+                    RunObject = report "Create Seminar Invoices";
+                    ToolTip = 'Create invoices for seminar registrations';
+                }
+
+            }
+
         }
         area(Creation)
         {
@@ -141,7 +236,7 @@ page 50142 "Seminar Manager Role Center"
             {
                 Caption = 'Create Invoices';
                 Image = CreateJobSalesInvoice;
-                // RunObject=report "CSD Create Seminar Invoices";
+                RunObject = report "Create Contract Invoices";
             }
             action(Navigate)
             {
@@ -154,4 +249,9 @@ page 50142 "Seminar Manager Role Center"
     }
 
 
+}
+profile "Seminar Administrator"
+{
+    Caption = 'Seminar Administrator';
+    RoleCenter = "Seminar Manager Role Center";
 }

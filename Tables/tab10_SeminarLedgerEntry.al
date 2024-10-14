@@ -27,6 +27,7 @@ table 50110 "CSD Seminar Ledger Entry"
         {
             Caption = 'Seminar No.';
             DataClassification = CustomerContent;
+            TableRelation = "CSD Seminar";
         }
         field(5; "Posting Date"; Date)
         {
@@ -58,6 +59,7 @@ table 50110 "CSD Seminar Ledger Entry"
         {
             Caption = 'Bill-to Customer No.';
             DataClassification = CustomerContent;
+            TableRelation = Customer;
         }
         field(11; "Charge Type"; Option)
         {
@@ -79,17 +81,20 @@ table 50110 "CSD Seminar Ledger Entry"
         field(14; "Unit Price"; Decimal)
         {
             Caption = 'Unit Price';
+            AutoFormatType = 2;
             DataClassification = CustomerContent;
         }
         field(15; "Total Price"; Decimal)
         {
             Caption = 'Total Price';
+            AutoFormatType = 1;
             DataClassification = CustomerContent;
         }
         field(16; "Participant Contact No."; Code[20])
         {
             Caption = 'Participant Contact No.';
             DataClassification = CustomerContent;
+            TableRelation = Contact;
         }
         field(17; "Participant Name"; Text[100])
         {
@@ -100,16 +105,19 @@ table 50110 "CSD Seminar Ledger Entry"
         {
             Caption = 'Chargeable';
             DataClassification = CustomerContent;
+            InitValue = true;
         }
         field(19; "Room Resource No."; Code[20])
         {
             Caption = 'Room Resource No.';
             DataClassification = CustomerContent;
+            TableRelation = Resource where(Type = const(Machine));
         }
         field(20; "Instructor Resource No."; Code[20])
         {
             Caption = 'Instructor Resource No.';
             DataClassification = CustomerContent;
+            TableRelation = Resource where(Type = const(Person));
         }
         field(21; "Starting Date"; Date)
         {
@@ -125,17 +133,18 @@ table 50110 "CSD Seminar Ledger Entry"
         {
             Caption = 'Res. Ledger Entry No.';
             DataClassification = CustomerContent;
+            TableRelation = "Res. Ledger Entry";
         }
         field(24; "Source Type"; Option)
         {
             Caption = 'Source Type';
-            OptionMembers = "Posting Accounts","Total Accounts",Formula,"Set Base For Percent","Cost Type","Cost Type Total","Cash Flow Entry Accounts","Cash Flow Total Accounts","Account Category";
-            DataClassification = CustomerContent;
+            OptionCaption = '" ,Seminar"';
+            OptionMembers = " ",Seminar;
         }
         field(25; "Source No."; Code[20])
         {
             Caption = 'Source No.';
-            DataClassification = CustomerContent;
+            TableRelation = if ("Source Type" = const(Seminar)) "CSD Seminar";
         }
         field(26; "Journal Batch Name"; Code[20])
         {
@@ -146,16 +155,19 @@ table 50110 "CSD Seminar Ledger Entry"
         {
             Caption = 'Source Code';
             DataClassification = CustomerContent;
+            TableRelation = "Source Code";
         }
         field(28; "Reason Code"; Code[20])
         {
             Caption = 'Reason Code';
             DataClassification = CustomerContent;
+            TableRelation = "Reason Code";
         }
         field(29; "No. Series"; Code[20])
         {
             Caption = 'No. Series';
             DataClassification = CustomerContent;
+            TableRelation = "No. Series";
         }
         field(30; "User ID"; Code[50])
         {

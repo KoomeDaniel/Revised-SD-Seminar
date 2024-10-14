@@ -14,11 +14,13 @@ table 50111 "CSD Seminar Register"
         {
             Caption = 'From Entry No.';
             DataClassification = CustomerContent;
+            TableRelation = "CSD Seminar Ledger Entry";
         }
         field(3; "To Entry No."; Integer)
         {
             Caption = 'To Entry No.';
             DataClassification = CustomerContent;
+            TableRelation = "CSD Seminar Ledger Entry";
         }
         field(4; "Creation Date"; Date)
         {
@@ -29,11 +31,22 @@ table 50111 "CSD Seminar Register"
         {
             Caption = 'Source Code';
             DataClassification = CustomerContent;
+            TableRelation = "Source Code";
         }
         field(6; "User ID"; Code[50])
         {
             Caption = 'User ID';
-            DataClassification = CustomerContent;
+            DataClassification = EndUserIdentifiableInformation;
+            NotBlank = true;
+            TableRelation = User."User Name";
+            ValidateTableRelation = false;
+
+            trigger OnValidate()
+            var
+                UserSelection: Codeunit "User Selection";
+            begin
+                UserSelection.ValidateUserName("User ID");
+            end;
         }
         field(7; "Journal Batch Name"; Code[20])
         {
