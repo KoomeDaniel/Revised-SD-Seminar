@@ -94,6 +94,13 @@ page 50142 "Seminar Manager Role Center"
                     Image = Setup;
                     RunObject = page "CSD Seminar Setup";
                 }
+                action("Source Code Setup")
+                {
+                    Caption = 'Source Code Setup';
+                    ToolTip = 'View and edit Seminar Source Code Setup information';
+                    Image = Setup;
+                    RunObject = page "Source Code Setup";
+                }
                 action("Seminar List")
                 {
                     Caption = 'Seminar List';

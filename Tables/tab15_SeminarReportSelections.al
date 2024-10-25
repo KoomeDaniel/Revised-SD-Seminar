@@ -67,4 +67,5 @@ table 50115 "CSD Seminar Report Selections"
             report.run(SemReportSelection."Report ID", true, false, SemRegHeader);
     end;
 
+
 }

@@ -4,6 +4,7 @@ page 50123 "CSD Seminar Report Selection"
     PageType = Worksheet;
     SaveValues = true;
     SourceTable = "CSD Seminar Report Selections";
+    UsageCategory = Documents;
 
     layout
     {
@@ -27,7 +28,7 @@ page 50123 "CSD Seminar Report Selection"
                 }
                 field("Report ID"; Rec."Report ID")
                 {
-                    LookupPageID = Objects;
+                    LookupPageID = Objects ;
                 }
                 field("Report Name"; Rec."Report Name")
                 {
