@@ -55,7 +55,7 @@ page 50109 "CSD Seminar Registration"
                 {
                     ApplicationArea = All;
                 }
-                field(Duration; Rec.Duration)
+                field("Duration (Minutes)"; Rec.Duration)
                 {
                     ApplicationArea = All;
                 }
@@ -186,6 +186,7 @@ page 50109 "CSD Seminar Registration"
                     ApplicationArea = All;
                     Image = PostDocument;
                     Promoted = true;
+                    PromotedCategory = Process;
                     RunObject = codeunit "CSD Seminar PostYesNo";
                 }
                 action("&Print")

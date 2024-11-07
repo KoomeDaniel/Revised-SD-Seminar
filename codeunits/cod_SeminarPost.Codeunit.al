@@ -102,8 +102,7 @@ codeunit 50140 "CSD Seminar Post"
                     SeminarRegLine.Amount := 0;
                 END;
 
-                // Post seminar entry
-                PostSeminarJnlLine(SeminarJnlLine."Charge Type"::Participant); // Participant
+                // PostSeminarJnlLine(SeminarJnlLine."Charge Type"::Participant); //Commented out to avoid double entry in seminar ledger 
 
                 // Insert posted seminar registration line
                 PstdSeminarRegLine.INIT;
@@ -236,7 +235,7 @@ codeunit 50140 "CSD Seminar Post"
                     SeminarJnlLine."Participant Contact No." := SeminarRegLine."Participant Contact No.";
                     SeminarJnlLine."Participant Name" := SeminarRegLine."Participant Name";
                     SeminarJnlLine.Description := SeminarRegLine."Participant Name";
-                    SeminarJnlLine.Type := SeminarJnlLine.Type::Resource;
+                    SeminarJnlLine.Type := SeminarJnlLine.Type::"G/L Account";
                     SeminarJnlLine.Chargeable := SeminarRegLine."To Invoice";
                     SeminarJnlLine.Quantity := 1;
                     SeminarJnlLine."Unit Price" := SeminarRegLine.Amount;

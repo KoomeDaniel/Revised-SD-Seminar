@@ -1,19 +1,31 @@
-page 50110 "CSD Registration Subform"
+page 50104 "CSD Seminar Receipt subform"
 {
-    PageType = ListPart;
     ApplicationArea = All;
-    UsageCategory = Lists;
+    Caption = 'SeminarReceiptLine';
+    PageType = ListPart;
     DelayedInsert = true;
     AutoSplitKey = true;
-    SourceTable = "CSD Seminar Registration Line";
-    Editable = false;
+    SourceTable = "CSD Seminar Receipt Line";
 
     layout
     {
         area(Content)
         {
-            repeater(GroupName)
+            repeater(General)
             {
+                field("Document No."; Rec."Document No.")
+                {
+                    ToolTip = 'Specifies the value of the Document No. field.', Comment = '%';
+                    trigger OnValidate()
+
+                    begin
+                        CurrPage.Update();
+                    end;
+                }
+                field("Receipt No."; Rec."Receipt No.")
+                {
+                    ToolTip = 'Specifies the value of the Receipt No. field.', Comment = '%';
+                }
                 field("Bill-to Customer No."; Rec."Bill-to Customer No.")
                 {
                     ApplicationArea = All;
@@ -57,6 +69,29 @@ page 50110 "CSD Registration Subform"
                 field(Amount; Rec.Amount)
                 {
                     ApplicationArea = All;
+                    DrillDownPageId = "CSD Ledger Entries";
+                    trigger OnDrillDown()
+                    var
+                        CSDSeminarLedgEntry: Record "CSD Seminar Ledger Entry";
+                        CSDSeminarRcptHdr: Record "CSD Seminar Receipt Header";
+                        concantenated: code[50];
+                    begin
+                        if CSDSeminarRcptHdr.Get(Rec."Document No.", Rec."Receipt No.") then begin
+                            if CSDSeminarRcptHdr.Posted then begin
+                                CSDSeminarLedgEntry.SetRange("Bill-to Customer No.", Rec."Bill-to Customer No.");
+                                concantenated := Rec."Document No." + '.' + Rec."Receipt No.";
+                                CSDSeminarLedgEntry.SetRange("Document No.", concantenated);
+                                PAGE.Run(PAGE::"CSD Ledger Entries", CSDSeminarLedgEntry);
+                            end
+                            else begin
+                                Message('This receipt is not posted yet.');
+                            end;
+                        end
+                        else begin
+                            Message('Receipt Header record not found.');
+                        end;
+                    end;
+
                 }
                 field("Amount Paid"; Rec."Amount Paid")
                 {
@@ -72,8 +107,5 @@ page 50110 "CSD Registration Subform"
                 }
             }
         }
-
     }
-
-
 }

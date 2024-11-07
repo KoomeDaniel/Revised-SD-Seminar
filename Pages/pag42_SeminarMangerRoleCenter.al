@@ -38,11 +38,18 @@ page 50142 "Seminar Manager Role Center"
         area(Embedding)
         {
 
+            action(PostedSeminarRegistrations)
+            {
+                Caption = 'Posted Seminar Registrations';
+                Image = List;
+                RunObject = page "CSD Posted Seminar RegList";
+                ToolTip = 'Create seminar registrations';
+            }
             action(SeminarRegistrations)
             {
                 Caption = 'Seminar Registrations';
                 Image = List;
-                RunObject = page "CSD Posted Seminar RegList";
+                RunObject = page "CSD Seminar Registration List";
                 ToolTip = 'Create seminar registrations';
             }
             action(Seminars)
@@ -93,6 +100,7 @@ page 50142 "Seminar Manager Role Center"
                     ToolTip = 'View and edit seminar setup information';
                     Image = Setup;
                     RunObject = page "CSD Seminar Setup";
+                    RunPageMode = Edit;
                 }
                 action("Source Code Setup")
                 {
@@ -113,6 +121,7 @@ page 50142 "Seminar Manager Role Center"
                     Caption = 'Seminar Charges';
                     Image = Cost;
                     RunObject = page "CSD Seminar Charge";
+                    RunPageMode = Edit;
                     ToolTip = 'Open the list of seminar charges';
                 }
                 action("My Seminars")
@@ -159,6 +168,26 @@ page 50142 "Seminar Manager Role Center"
                     Image = Resource;
                     RunObject = page "Resource List";
                     RunPageLink = Type = CONST(Machine);
+                }
+            }
+            group(Receipts)
+            {
+                Caption = 'Receipts';
+                ToolTip = 'View and edit receipts for seminar registrations';
+                action("Seminar Receipts")
+                {
+                    Caption = 'Seminar Receipts';
+                    Image = Receipt;
+                    RunObject = page "CSD receipt list";
+                    ToolTip = 'Open the list of seminar receipts';
+                }
+
+                action("Posted Seminar Receipts")
+                {
+                    Caption = 'Posted Seminar Receipts';
+                    ToolTip = 'View the posted seminar receipts';
+                    Image = Receipt;
+                    RunObject = page "CSD posted seminar receipt";
                 }
             }
             group("Posted Documents")
@@ -228,6 +257,15 @@ page 50142 "Seminar Manager Role Center"
                 Image = NewTimesheet;
                 RunObject = page "CSD Seminar Registration";
                 RunPageMode = Create;
+            }
+            action("New Seminar Receipts")
+            {
+                Caption = 'New Seminar Receipts';
+                Image = Receipt;
+                RunObject = page "CSD Seminar Receipt Header";
+                RunPageMode = Create;
+                ToolTip = 'Create New seminar receipts';
+
             }
             action(NewSalesInvoice)
             {

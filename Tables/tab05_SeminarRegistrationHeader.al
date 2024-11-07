@@ -77,7 +77,7 @@ table 50105 "CSD Registration Header"
         }
         field(8; Duration; Decimal)
         {
-            Caption = 'Duration';
+            Caption = 'Duration (Minutes)';
             DataClassification = ToBeClassified;
         }
         field(9; "Maximum Participants"; Integer)
@@ -146,7 +146,7 @@ table 50105 "CSD Registration Header"
             Caption = 'Room Name';
             DataClassification = ToBeClassified;
         }
-        field(13; "Room Address"; Text[50])
+        field(13; "Room Address"; Text[80])
         {
             Caption = 'Room Address';
             DataClassification = ToBeClassified;
@@ -286,6 +286,13 @@ table 50105 "CSD Registration Header"
             SumIndexFields = Duration;
         }
     }
+    fieldgroups
+    {
+        fieldgroup(DropDown; "No.", "Seminar No.", "Seminar Name", "Starting Date")
+        {
+
+        }
+    }
 
     var
         SeminarSetup: Record "CSD SEMINAR SETUP";
@@ -358,10 +365,9 @@ table 50105 "CSD Registration Header"
     procedure InitRecord()
     begin
         if "Posting Date" = 0D then
-            "Posting Date" := WorkDate();
-        //This ensures that if the posting date is not manually set, it defaults to the current system date. The Posting Date is usually the date the registration is posted or recorded in the system.
-        "Document Date" := WorkDate();//is set to the current system date using WorkDate().Document Date typically represents the date when the document (in this case, the seminar registration) was created or is effective.
+            "Posting Date" := Today();
 
+        "Document Date" := Today();
         SeminarSetup.Get();
         SeminarSetup.TestField("Posted Seminar Reg. Nos.");
         NoSeriesMgt.SetDefaultSeries("Posting No. Series", SeminarSetup."Posted Seminar Reg. Nos.");

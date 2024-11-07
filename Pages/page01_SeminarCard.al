@@ -127,7 +127,8 @@ page 50101 "CSD SEMINAR CARD"
                     Image = Timesheet;
                     Promoted = true;
                     PromotedCategory = Process;
-                    RunObject = page "CSD Seminar Registration List";
+                    //RunObject = page "CSD Seminar Registration List";
+                    RunObject = page "CSD Seminar Receipt Doc";
                     RunPageLink = "Seminar No." = field("No.");
                 }
             }
