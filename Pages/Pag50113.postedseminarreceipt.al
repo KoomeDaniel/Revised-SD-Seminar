@@ -1,7 +1,7 @@
 page 50113 "CSD posted seminar receipt"
 {
     ApplicationArea = All;
-    Caption = 'posted seminar receipt';
+    Caption = 'posted seminar receipt List';
     PageType = List;
     SourceTable = "CSD Seminar Receipt Header";
     SourceTableView = where(Posted = const(true));

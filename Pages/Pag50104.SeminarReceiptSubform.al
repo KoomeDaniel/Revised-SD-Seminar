@@ -3,7 +3,7 @@ page 50104 "CSD Seminar Receipt subform"
     ApplicationArea = All;
     Caption = 'SeminarReceiptLine';
     PageType = ListPart;
-    DelayedInsert = true;
+    // DelayedInsert = true;
     AutoSplitKey = true;
     SourceTable = "CSD Seminar Receipt Line";
 
@@ -16,6 +16,7 @@ page 50104 "CSD Seminar Receipt subform"
                 field("Document No."; Rec."Document No.")
                 {
                     ToolTip = 'Specifies the value of the Document No. field.', Comment = '%';
+                    Visible = false;
                     trigger OnValidate()
 
                     begin
@@ -25,18 +26,26 @@ page 50104 "CSD Seminar Receipt subform"
                 field("Receipt No."; Rec."Receipt No.")
                 {
                     ToolTip = 'Specifies the value of the Receipt No. field.', Comment = '%';
+                    Visible = false;
                 }
                 field("Bill-to Customer No."; Rec."Bill-to Customer No.")
                 {
                     ApplicationArea = All;
+                    Visible = false;
                 }
                 field("Participant Contact No."; Rec."Participant Contact No.")
                 {
                     ApplicationArea = All;
+                    Visible = false;
                 }
                 field("Participant Name"; Rec."Participant Name")
                 {
                     ApplicationArea = All;
+                    Visible = false;
+                }
+                field("Transaction Type"; Rec."Transaction Type")
+                {
+                    ToolTip = 'Specifies the value of the Transaction Type field.', Comment = '%';
                 }
                 field(Participated; Rec.Participated)
                 {
@@ -79,7 +88,7 @@ page 50104 "CSD Seminar Receipt subform"
                         if CSDSeminarRcptHdr.Get(Rec."Document No.", Rec."Receipt No.") then begin
                             if CSDSeminarRcptHdr.Posted then begin
                                 CSDSeminarLedgEntry.SetRange("Bill-to Customer No.", Rec."Bill-to Customer No.");
-                                concantenated := Rec."Document No." + '.' + Rec."Receipt No.";
+                                concantenated := Rec."Document No." + '.' + Rec."Participant Contact No.";
                                 CSDSeminarLedgEntry.SetRange("Document No.", concantenated);
                                 PAGE.Run(PAGE::"CSD Ledger Entries", CSDSeminarLedgEntry);
                             end
@@ -92,6 +101,10 @@ page 50104 "CSD Seminar Receipt subform"
                         end;
                     end;
 
+                }
+                field(Required; Rec.Required)
+                {
+                    ToolTip = 'Specifies the value of the Required field.', Comment = '%';
                 }
                 field("Amount Paid"; Rec."Amount Paid")
                 {

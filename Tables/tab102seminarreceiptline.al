@@ -19,22 +19,23 @@ table 50149 "CSD Seminar Receipt Line"
             Caption = 'Bill-to Customer No.';
             DataClassification = ToBeClassified;
             TableRelation = Customer where(Blocked = const(" "));
+
             trigger OnValidate()
             begin
                 TestField(Registered, false);
             end;
         }
-        field(4; "Participant Contact No."; Code[20])
+        field(4; "Participant Contact No."; Code[30])
         {
             Caption = 'Participant Contact No.';
             DataClassification = ToBeClassified;
             TableRelation = Contact;
             trigger OnValidate()
             begin
-                if ("Bill-to Customer No." = '') or
-                ("Participant Contact No." = '')
-                then
-                    exit;
+                // if ("Bill-to Customer No." = '') or
+                // ("Participant Contact No." = '')
+                // then
+                //     exit;
 
                 Contact.Get("Participant Contact No.");
                 ContactBusinessRelation.Reset;
@@ -60,14 +61,16 @@ table 50149 "CSD Seminar Receipt Line"
                 if Page.RunModal(Page::"Contact List", Contact) = ACTION::LookupOK then begin
                     "Participant Contact No." := Contact."No.";
                     "Participant Name" := Contact."Name";
+                    "Participant E-mail" := Contact."E-Mail";
                     if CSDSeminarRcpt.Get("Document No.", "Receipt No.") then begin
                         CSDSeminarRcpt."Participant Name" := "Participant Name";
+                        CSDSeminarRcpt."Participant E-mail" := "Participant E-mail";
                         CSDSeminarRcpt.Modify();
                     end;
                 end;
             end;
         }
-        field(5; "Participant Name"; Text[20])
+        field(5; "Participant Name"; Text[30])
         {
             caption = 'Participant Name';
             DataClassification = ToBeClassified;
@@ -179,6 +182,15 @@ table 50149 "CSD Seminar Receipt Line"
             trigger OnValidate()
             begin
                 UpdateBalanceAndStatus();
+                Rec.Modify();
+                UpdateTotalReceiptLines();
+                if ("Bill-to Customer No." = '') and ("Participant Contact No." = '') and ("Participant Name" = '') then
+                    if CSDSeminarRcpt.get("Document No.", "Receipt No.") then begin
+                        "Bill-to Customer No." := CSDSeminarRcpt."Bill-to Customer No.";
+                        "Participant Contact No." := CSDSeminarRcpt."Participant Contact No.";
+                        "Participant Name" := CSDSeminarRcpt."Participant Name";
+                    end;
+                exit;
             end;
 
         }
@@ -192,6 +204,25 @@ table 50149 "CSD Seminar Receipt Line"
         {
             DataClassification = ToBeClassified;
         }
+        field(19; "Participant E-mail"; Text[30])
+        {
+            caption = 'Participant Email';
+            DataClassification = ToBeClassified;
+        }
+        field(20; "Transaction Type"; Option)
+        {
+            DataClassification = ToBeClassified;
+            OptionMembers = "Registration fees","Principal fees","Interest fees","Penalty fees","Other fees";
+            trigger OnValidate()
+            begin
+                RecalculateRequiredAmount();
+            end;
+        }
+        field(21; "Required"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            caption = 'Required';
+        }
 
     }
 
@@ -201,6 +232,7 @@ table 50149 "CSD Seminar Receipt Line"
         {
             Clustered = true;
         }
+        key(key2; "Transaction Type") { }
     }
 
 
@@ -210,12 +242,18 @@ table 50149 "CSD Seminar Receipt Line"
         Contact: Record Contact;
         ContactBusinessRelation: Record "Contact Business Relation";
         ContactHasDifferentCompanyThanCustomer: Label 'Contact %1 %2 is related to a different company than customer %3.';
-
+        RegistrationRate: Decimal;
+        PrincipalRate: Decimal;
+        InterestRate: Decimal;
+        PenaltyRate: Decimal;
+        OtherFeesRate: Decimal;
 
     trigger OnInsert()
     begin
-        GetSeminarRegHeader();
+        if ("Bill-to Customer No." = '') or ("Participant Contact No." = '') then
+            GetSeminarRegHeader();
         UpdateBalanceAndStatus();
+        RecalculateRequiredAmount();
     end;
 
     trigger OnModify()
@@ -233,8 +271,13 @@ table 50149 "CSD Seminar Receipt Line"
     procedure GetSeminarRegHeader();
     begin
         if CSDSeminarRcpt.Get("Document No.", "Receipt No.") then begin
+            CSDSeminarRcpt.TestField("Bill-to Customer No.");
+            CSDSeminarRcpt.TestField("Participant Contact No.");
             "Seminar Price" := CSDSeminarRcpt."Seminar Price";
             Amount := CSDSeminarRcpt."Seminar Price";
+            "Bill-to Customer No." := CSDSeminarRcpt."Bill-to Customer No.";
+            "Participant Contact No." := CSDSeminarRcpt."Participant Contact No.";
+            "Participant Name" := CSDSeminarRcpt."Participant Name";
 
         end;
     end;
@@ -252,11 +295,86 @@ table 50149 "CSD Seminar Receipt Line"
 
     procedure UpdateBalanceAndStatus()
     begin
-        Balance := Amount - "Amount Paid";
+        Balance := Required - "Amount Paid";
 
         if Balance <= 0 then
             "Fully Paid" := true
         else
             "Fully Paid" := false;
+    end;
+
+    local procedure UpdateTotalReceiptLines()
+    var
+        CSDSeminarRcptHdr: Record "CSD Seminar Receipt Header";
+        TotalQty: Decimal;
+        SeminarLedgerEntry: Record "CSD Seminar Ledger Entry";
+        TotalAmountPaid: Decimal;
+        FullDocumentNo: Text[50];
+    begin
+        if Rec."Document No." = '' then
+            exit;
+        FullDocumentNo := rec."Document No." + '.' + rec."Participant Contact No.";
+
+        TotalQty := 0;
+        if Rec.FindSet then
+            repeat
+                TotalQty += Rec."Amount Paid";
+            until Rec.Next = 0;
+
+        TotalAmountPaid := 0;
+        SeminarLedgerEntry.Reset();
+        SeminarLedgerEntry.SetRange("Document No.", FullDocumentNo);
+        if SeminarLedgerEntry.FindSet() then
+            repeat
+                TotalAmountPaid += SeminarLedgerEntry."Amount Paid";
+            until SeminarLedgerEntry.Next() = 0;
+
+        if CSDSeminarRcptHdr.Get(Rec."Document No.", Rec."Receipt No.") then begin
+            CSDSeminarRcptHdr."Total Receipt Lines" := TotalQty;
+            if TotalAmountPaid > 0 then
+                CSDSeminarRcptHdr.Balance := ("Seminar Price" - TotalAmountPaid - TotalQty)
+            else
+                CSDSeminarRcptHdr.Balance := ("Seminar Price" - TotalQty);
+            CSDSeminarRcptHdr.Modify();
+        end;
+    end;
+
+    procedure RecalculateRequiredAmount()
+    var
+        CSDSeminarLedgEntry: Record "CSD Seminar Ledger Entry";
+        CompositeKey: Text[250];
+        LatestBalance: Decimal;
+    begin
+        // Build the composite key
+        CompositeKey := "Document No." + '.' + "Participant Contact No.";
+
+        // Initialize required amount
+        "Required" := 0;
+
+        // Filter ledger entries by composite key
+        CSDSeminarLedgEntry.SETRANGE("Document No.", CompositeKey);
+        CSDSeminarLedgEntry.SETRANGE("Transaction Type", "Transaction Type");
+
+        // Find the latest ledger entry
+        if CSDSeminarLedgEntry.FINDLAST then begin
+            LatestBalance := CSDSeminarLedgEntry.Balance;
+
+            // Assign the balance to the required field
+            "Required" := LatestBalance;
+        end else begin
+            // If no entry is found, assign a default required amount based on rates
+            case "Transaction Type" of
+                "Transaction Type"::"Registration fees":
+                    "Required" := "Seminar Price" * 0.30;
+                "Transaction Type"::"Principal fees":
+                    "Required" := "Seminar Price" * 0.40;
+                "Transaction Type"::"Interest fees":
+                    "Required" := "Seminar Price" * 0.15;
+                "Transaction Type"::"Penalty fees":
+                    "Required" := "Seminar Price" * 0.10;
+                "Transaction Type"::"Other fees":
+                    "Required" := "Seminar Price" * 0.05;
+            end;
+        end;
     end;
 }

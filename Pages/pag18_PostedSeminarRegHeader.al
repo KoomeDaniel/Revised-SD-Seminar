@@ -61,7 +61,7 @@ page 50118 "CSD Posted Seminar Reg. Header"
                     ApplicationArea = All;
                 }
             }
-            part(SeminarRegistrationLines; "CSD Registration Subform")
+            part(PostedSeminarRegistrationLines; ad_PostedSeminarRegSubform)
             {
                 SubPageLink = "Document No." = field("No.");
                 ApplicationArea = All;
@@ -124,11 +124,11 @@ page 50118 "CSD Posted Seminar Reg. Header"
                 ApplicationArea = All;
                 SubPageLink = "No." = field("Seminar No.");
             }
-            part(CustomerDetails; "Customer Details FactBox")
+            part(CustomerDetails; "Seminar Receipt factbox")
             {
                 ApplicationArea = All;
-                Provider = SeminarRegistrationLines;
-                SubPageLink = "No." = field("Bill-to Customer No.");
+                Provider = PostedSeminarRegistrationLines;
+                SubPageLink = "Document No." = field(Description), "Participant Contact No." = field("Participant Contact No.");
             }
             systempart(RecordLinks; Links)
             {

@@ -51,13 +51,17 @@ page 50120 ad_PostedSeminarRegSubform
                 {
                     ApplicationArea = All;
                 }
-                field("Line Discount Amount"; Rec."Line Discount Amount")
-                {
-                    ApplicationArea = All;
-                }
                 field(Amount; Rec.Amount)
                 {
                     ApplicationArea = All;
+                }
+                field("Amount Paid"; Rec."Amount Paid")
+                {
+                    ToolTip = 'Specifies the value of the amount paid field.', Comment = '%';
+                }
+                field(Balance; Rec.Balance)
+                {
+                    ToolTip = 'Specifies the value of the Balance field.', Comment = '%';
                 }
             }
         }

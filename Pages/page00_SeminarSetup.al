@@ -26,12 +26,24 @@ page 50100 "CSD Seminar Setup"
                 }
                 field("Seminar Receipt Nos."; Rec."Seminar Receipt Nos.")
                 {
-                    ToolTip = 'Specifies the value of the Seminar Registration Nos. field.', Comment = '%';
+                    ToolTip = 'Specifies the value of the Seminar Receipt Nos. field.', Comment = '%';
                 }
                 field("Posted Seminar Reg. Nos."; Rec."Posted Seminar Reg. Nos.")
                 {
                     ApplicationArea = All;
 
+                }
+                field("Message Nos."; Rec."Message Nos.")
+                {
+                    ToolTip = 'Specifies the value of the Message Nos. field.', Comment = '%';
+                }
+                field("Message Sent Nos."; Rec."Message Sent Nos.")
+                {
+                    ToolTip = 'Specifies the value of the Message Sent Nos. field.', Comment = '%';
+                }
+                field("Participant Nos."; Rec."Participant Nos.")
+                {
+                    ToolTip = 'Specifies the value of the Participant Nos. field.', Comment = '%';
                 }
             }
         }

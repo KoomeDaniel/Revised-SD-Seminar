@@ -69,7 +69,7 @@ table 50106 "CSD Seminar Registration Line"
             //If a business relation is found, the system retrieves the relevant contact records associated with that customer.
             //The Contact list page is displayed to the user, allowing them to choose a contact. If the user confirms their choice (LookupOK), the "Participant Contact No." field is populated with the selected contact's number, and the "Participant Name" is updated with the corresponding name.
         }
-        field(5; "Participant Name"; Text[20])
+        field(5; "Participant Name"; Text[30])
         {
             caption = 'Participant Name';
             DataClassification = ToBeClassified;
@@ -165,12 +165,6 @@ table 50106 "CSD Seminar Registration Line"
             DataClassification = ToBeClassified;
             editable = false;
         }
-        field(15; "Fully Paid"; Boolean)
-        {
-            caption = 'Fully Paid';
-            DataClassification = ToBeClassified;
-            editable = false;
-        }
         field(16; "Amount Paid"; Decimal)
         {
             DataClassification = ToBeClassified;
@@ -183,10 +177,12 @@ table 50106 "CSD Seminar Registration Line"
             DecimalPlaces = 2;
             Caption = 'Balance';
         }
-        field(18; "Receipt No."; code[20])
+        field(18; Description; text[250])
         {
             DataClassification = ToBeClassified;
+            Caption = 'Description';
         }
+
 
     }
 
@@ -212,6 +208,13 @@ table 50106 "CSD Seminar Registration Line"
         GetSeminarRegHeader();//checks if the SeminarRegHeader record is already loaded based on the "Document No." and retrieves it if not. This ensures that the seminar registration header data is accessible for the current line.
         "Seminar Price" := SeminarRegHeader."Seminar Price";//initialized by setting the "Seminar Price" field of the new line record to the price retrieved from the SeminarRegHeader.
         Amount := SeminarRegHeader."Seminar Price";//initialized to the same value as the "Seminar Price". 
+        UpdateAmount();
+        Description := "Document No.";
+    end;
+
+    trigger OnModify()
+    begin
+        Description := "Document No.";
     end;
 
     trigger OnDelete()
@@ -240,4 +243,6 @@ table 50106 "CSD Seminar Registration Line"
         Amount := Round("Seminar Price" - "Line Discount Amount", GLSetup."Amount Rounding Precision");//The amount is calculated as the difference between the seminar price ("Seminar Price") and the line discount amount ("Line Discount Amount").
         //The result is rounded using the rounding precision obtained from the GLSetup record. This ensures that the final value of Amount adheres to any specified decimal or rounding constraints.
     end;
+
+
 }

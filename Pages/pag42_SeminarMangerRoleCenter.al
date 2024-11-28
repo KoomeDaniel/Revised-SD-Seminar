@@ -15,6 +15,9 @@ page 50142 "Seminar Manager Role Center"
                 part(MySeminars; "CSD My Seminar")
                 {
                 }
+                part(csdSMSSENT; "csd SMS SENT")
+                {
+                }
             }
             group(column2)
             {
@@ -27,6 +30,10 @@ page 50142 "Seminar Manager Role Center"
                 part(ReportInbox; "Report Inbox Part")
                 {
                 }
+                part(csdSMSRECEIVED; "csd SMS Received")
+                {
+                }
+
             }
         }
     }
@@ -79,11 +86,12 @@ page 50142 "Seminar Manager Role Center"
                 RunObject = page "Sales Invoice List";
                 ToolTip = 'Revert the financial transactions involved when your customers want to cancel a purchase';
             }
-            action(Customers)
+            action(Participants)
             {
-                Caption = 'Customers';
+                Caption = 'Participants';
                 Image = Customer;
-                RunObject = page "Customer List";
+                RunObject = page "CSD Participant List";
+                RunPageMode = View;
                 ToolTip = 'View or edit detailed information for the customers that you trade with';
             }
 
@@ -146,8 +154,6 @@ page 50142 "Seminar Manager Role Center"
                     ToolTip = 'View the ledger entries for seminars';
                     RunObject = page "CSD Ledger Entries";
                 }
-
-
             }
             group(Resources)
             {
@@ -273,6 +279,14 @@ page 50142 "Seminar Manager Role Center"
                 Image = NewSalesInvoice;
                 RunObject = page "Sales Invoice";
                 RunPageMode = Create;
+            }
+            action(NewParticipants)
+            {
+                Caption = 'Participants';
+                Image = Customer;
+                RunObject = page "CSD Participant List";
+                RunPageMode = View;
+                ToolTip = 'View or edit detailed information for the customers that you trade with';
             }
         }
         area(processing)

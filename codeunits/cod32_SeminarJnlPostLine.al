@@ -83,6 +83,10 @@ codeunit 50132 "CSD Seminar Jnl.-Post Line"
         SeminarLedgerEntry."No. Series" := SeminarJnlLine."Posting No. Series";
         SeminarLedgerEntry."User ID" := USERID;
         SeminarLedgerEntry."Entry No." := NextEntryNo;
+        SeminarLedgerEntry."Transaction Type" := SeminarJnlLine."Transaction Type";
+        SeminarLedgerEntry.Required := SeminarJnlLine.Required;
+        SeminarLedgerEntry."Amount Paid" := SeminarJnlLine."Amount Paid";
+        SeminarLedgerEntry.Balance := SeminarJnlLine.Balance;
         SeminarLedgerEntry.INSERT;
         NextEntryNo := NextEntryNo + 1;
     END;

@@ -19,29 +19,27 @@ table 50113 "CSD Posted Seminar RegLine"
         {
             Caption = 'Bill-to Customer No.';
             DataClassification = ToBeClassified;
-            TableRelation = Customer where(Blocked = const(" "));
         }
         field(4; "Participant Contact No."; Code[20])
         {
             Caption = 'Participant Contact No.';
             DataClassification = ToBeClassified;
-            TableRelation = Contact;
 
         }
-        field(5; "Participant Name"; Text[100])
+        field(5; "Participant Name"; Text[30])
         {
-            Caption = 'Participant Name';
+            caption = 'Participant Name';
             DataClassification = ToBeClassified;
         }
         field(6; "Registration Date"; Date)
         {
-            Caption = 'Registration Date';
+            caption = 'Registration Date';
             DataClassification = ToBeClassified;
             Editable = false;
         }
         field(7; "To Invoice"; Boolean)
         {
-            Caption = 'To Invoice';
+            caption = 'To Invoice';
             DataClassification = ToBeClassified;
             InitValue = true;
         }
@@ -52,41 +50,61 @@ table 50113 "CSD Posted Seminar RegLine"
         }
         field(9; "Confirmation Date"; Date)
         {
-            Caption = 'Confirmation Date';
+            caption = 'Confirmation Date';
             DataClassification = ToBeClassified;
             Editable = false;
         }
         field(10; "Seminar Price"; Decimal)
         {
-            Caption = 'Seminar Price';
+            caption = 'Seminar Price';
             DataClassification = ToBeClassified;
             AutoFormatType = 2;
         }
         field(11; "Line Discount %"; Decimal)
         {
-            Caption = 'Line Discount %';
+            caption = 'Line Discount %';
             DataClassification = ToBeClassified;
             MinValue = 0;
             MaxValue = 100;
             DecimalPlaces = 0 : 5;
+
         }
         field(12; "Line Discount Amount"; Decimal)
         {
-            Caption = 'Line Discount Amount';
+            caption = 'Line Discount Amount';
             DataClassification = ToBeClassified;
         }
         field(13; Amount; Decimal)
         {
-            Caption = 'Amount';
+            caption = 'Amount';
             DataClassification = ToBeClassified;
         }
         field(14; Registered; Boolean)
         {
-            Caption = 'Registered';
+            caption = 'Registered';
             DataClassification = ToBeClassified;
-            Editable = false;
+            editable = false;
         }
+        field(16; "Amount Paid"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'amount paid';
+            DecimalPlaces = 2;
+        }
+        field(17; Balance; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            DecimalPlaces = 2;
+            Caption = 'Balance';
+        }
+        field(18; Description; text[250])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Description';
+        }
+
     }
+
     keys
     {
         key(PK; "Document No.", "Line No.")
@@ -94,4 +112,5 @@ table 50113 "CSD Posted Seminar RegLine"
             Clustered = true;
         }
     }
+
 }

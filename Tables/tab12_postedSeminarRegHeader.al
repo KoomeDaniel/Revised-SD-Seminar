@@ -71,12 +71,12 @@ table 50112 "CSD Posted Seminar RegHeader"
             Caption = 'Room Name';
             DataClassification = ToBeClassified;
         }
-        field(13; "Room Address"; Text[50])
+        field(13; "Room Address"; Text[100])
         {
             Caption = 'Room Address';
             DataClassification = ToBeClassified;
         }
-        field(14; "Room Address 2"; Text[50])
+        field(14; "Room Address 2"; Text[100])
         {
             Caption = 'Room Address 2';
             DataClassification = ToBeClassified;
@@ -100,7 +100,7 @@ table 50112 "CSD Posted Seminar RegHeader"
             DataClassification = ToBeClassified;
             TableRelation = "Country/Region";
         }
-        field(18; "Room County"; Text[30])
+        field(18; "Room County"; Text[100])
         {
             Caption = 'Room County';
             DataClassification = ToBeClassified;
@@ -178,6 +178,11 @@ table 50112 "CSD Posted Seminar RegHeader"
         {
             DataClassification = ToBeClassified;
             TableRelation = "Source Code";
+        }
+        field(32; Description; text[250])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Description';
         }
 
 

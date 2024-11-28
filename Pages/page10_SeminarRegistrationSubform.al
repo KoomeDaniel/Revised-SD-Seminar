@@ -66,10 +66,6 @@ page 50110 "CSD Registration Subform"
                 {
                     ToolTip = 'Specifies the value of the Balance field.', Comment = '%';
                 }
-                field("Fully Paid"; Rec."Fully Paid")
-                {
-                    ToolTip = 'Specifies the value of the Fully Paid field.', Comment = '%';
-                }
             }
         }
 

@@ -29,6 +29,11 @@ page 50121 "CSD Ledger Entries"
                     applicationArea = All;
                     ToolTip = 'Specifies the value of the Document Date field.', Comment = '%';
                 }
+                field("Transaction Type"; Rec."Transaction Type")
+                {
+                    ToolTip = 'Specifies the value of the Transaction Type field.', Comment = '%';
+                }
+
                 field("Entry Type"; Rec."Entry Type")
                 {
                     applicationArea = All;
@@ -73,6 +78,18 @@ page 50121 "CSD Ledger Entries"
                 {
                     applicationArea = All;
                     ToolTip = 'Specifies the value of the Total Price field.', Comment = '%';
+                }
+                field(Required; Rec.Required)
+                {
+                    ToolTip = 'Specifies the value of the Required field.', Comment = '%';
+                }
+                field("Amount Paid"; Rec."Amount Paid")
+                {
+                    ToolTip = 'Specifies the value of the Amount Paid field.', Comment = '%';
+                }
+                field(Balance; Rec.Balance)
+                {
+                    ToolTip = 'Specifies the value of the Balance field.', Comment = '%';
                 }
                 field(Chargeable; Rec.Chargeable)
                 {

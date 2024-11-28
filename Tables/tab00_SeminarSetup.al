@@ -24,13 +24,34 @@ table 50100 "CSD SEMINAR SETUP"
         }
         field(40; "Seminar Receipt Nos."; Code[20])
         {
-            Caption = 'Seminar Registration Nos.';
+            Caption = 'Seminar Receipt Nos.';
             DataClassification = ToBeClassified;
             TableRelation = "No. Series";
         }
         field(50; "Posted Seminar Reg. Nos."; Code[20])
         {
             Caption = 'Posted Seminar Reg. Nos.';
+            DataClassification = ToBeClassified;
+            TableRelation = "No. Series";
+
+        }
+        field(60; "Participant Nos."; Code[20])
+        {
+            Caption = 'Participant Nos.';
+            DataClassification = ToBeClassified;
+            TableRelation = "No. Series";
+
+        }
+        field(70; "Message Nos."; Code[20])
+        {
+            Caption = 'Message Nos.';
+            DataClassification = ToBeClassified;
+            TableRelation = "No. Series";
+
+        }
+        field(80; "Message Sent Nos."; Code[20])
+        {
+            Caption = 'Message Sent Nos.';
             DataClassification = ToBeClassified;
             TableRelation = "No. Series";
 

@@ -2,6 +2,8 @@ table 50105 "CSD Registration Header"
 {
     Caption = 'Registration Header';
     DataClassification = ToBeClassified;
+    LookupPageId = "CSD Seminar Registration List";
+    DrillDownPageId = "CSD Seminar Registration List";
 
     fields
     {
@@ -273,6 +275,18 @@ table 50105 "CSD Registration Header"
             Editable = false;
             DataClassification = ToBeClassified;
         }
+        field(32; Description; text[250])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Description';
+        }
+        field(33; "Approval Status"; Enum "Custom Approval")
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Approval Status';
+            Editable = false;
+        }
+
     }
 
     keys
@@ -306,6 +320,7 @@ table 50105 "CSD Registration Header"
         ErrCannotDeleteLine: Label 'Cannot delete the Seminar Registration, there exists at least one %1 where %2=%3.';
         ErrCannotDeleteCharge: Label 'Cannot delete the Seminar Registration, there exists at least one %1.';
         ChangeSeminarRoomQst: Label 'This Seminar is for %1 participants. \The selected Room has a maximum of %2 participants \Do you want to change %3 for the Seminar from %4 to %5?';
+        ErrApprovalStatus: Label 'Cannot modify the record because the approval status is %1.';
 
     trigger OnInsert()
     begin
@@ -362,12 +377,19 @@ table 50105 "CSD Registration Header"
         //After applying these filters, it proceeds to delete all related seminar comment lines using the DeleteAll() method. This ensures that any comments related to the seminar registration are also removed when the registration header is deleted.
     end;
 
+    trigger OnModify()
+    begin
+
+        Description := "No.";
+    end;
+
     procedure InitRecord()
     begin
         if "Posting Date" = 0D then
             "Posting Date" := Today();
 
         "Document Date" := Today();
+        Description := "No.";
         SeminarSetup.Get();
         SeminarSetup.TestField("Posted Seminar Reg. Nos.");
         NoSeriesMgt.SetDefaultSeries("Posting No. Series", SeminarSetup."Posted Seminar Reg. Nos.");

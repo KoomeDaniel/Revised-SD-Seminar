@@ -160,6 +160,26 @@ table 50109 "CSD Seminar Journal Line"
             DataClassification = ToBeClassified;
             TableRelation = "No. Series";
         }
+        field(31; "Transaction Type"; Option)
+        {
+            DataClassification = ToBeClassified;
+            OptionMembers = "Registration fees","Principal fees","Interest fees","Penalty fees","Other fees";
+        }
+        field(32; Required; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Required';
+        }
+        field(33; "Amount Paid"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Amount Paid';
+        }
+        field(34; Balance; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Balance';
+        }
     }
 
     keys

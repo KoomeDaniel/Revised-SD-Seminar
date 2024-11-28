@@ -8,7 +8,7 @@
             "environmentType": "OnPrem",
             "server": "http://localhost",
             "serverInstance": "BC210",
-            "authentication": "Windows",
+            "authentication": "UserPassword",
             "startupObjectType": "Page",
             "breakOnError": "All",
             "launchBrowser": true,

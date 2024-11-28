@@ -63,6 +63,10 @@ table 50143 "CSD Seminar Receipt Header"
             DataClassification = ToBeClassified;
             Caption = 'Seminar Price';
             DecimalPlaces = 2;
+            trigger OnValidate()
+            begin
+                // UpdateBalance();
+            end;
         }
         field(10; "Seminar Name"; Text[50])
         {
@@ -126,11 +130,114 @@ table 50143 "CSD Seminar Receipt Header"
             Editable = false;
             InitValue = false;
         }
-        field(22; "Participant Name"; Text[20])
+        field(22; "Participant Name"; Text[30])
         {
             DataClassification = ToBeClassified;
             Caption = 'Participant Name';
         }
+        field(23; "Participant E-mail"; Text[40])
+        {
+            caption = 'Participant Email';
+            DataClassification = ToBeClassified;
+        }
+        field(24; "Total Receipt Lines"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Total Receipt Lines';
+            editable = false;
+            trigger OnValidate()
+            begin
+                // UpdateBalance();
+            end;
+        }
+        field(25; "Bill-to Customer No."; Code[20])
+        {
+            Caption = 'Bill-to Customer No.';
+            DataClassification = ToBeClassified;
+            TableRelation = Customer where(Blocked = const(" "));
+
+        }
+        field(26; "Participant Contact No."; Code[30])
+        {
+            Caption = 'Participant Contact No.';
+            DataClassification = ToBeClassified;
+            TableRelation = Contact;
+            trigger OnValidate()
+            begin
+                if ("Bill-to Customer No." = '') or
+                ("Participant Contact No." = '')
+                then
+                    exit;
+
+                Contact.Get("Participant Contact No.");
+                ContactBusinessRelation.Reset;
+                ContactBusinessRelation.SetCurrentKey("Link to Table", "No.");
+                ContactBusinessRelation.SetRange("Link to Table", ContactBusinessRelation."Link to Table"::Customer);
+                ContactBusinessRelation.SetRange("No.", "Bill-to Customer No.");
+                if not ContactBusinessRelation.FindFirst then
+                    exit;
+                if ContactBusinessRelation."Contact No." <> Contact."Company Name" then begin
+                    Error(ContactHasDifferentCompanyThanCustomer, Contact."No.", Contact."Company Name", "Bill-to Customer No.");
+                end;
+            end;
+
+            trigger OnLookup()
+            var
+                SeminarLedgerEntry: Record "CSD Seminar Ledger Entry";
+                CSDSeminarRcptHdr: Record "CSD Seminar Receipt Header";
+                TotalAmountPaid: Decimal;
+                FullDocumentNo: Text[50];
+            begin
+                ContactBusinessRelation.Reset;
+                ContactBusinessRelation.SetRange("Link to Table", ContactBusinessRelation."Link to Table"::Customer);
+                ContactBusinessRelation.SetRange("No.", "Bill-to Customer No.");
+                if not ContactBusinessRelation.FindFirst then
+                    exit;
+                Contact.Reset;
+                Contact.SetRange("Company No.", ContactBusinessRelation."Contact No.");
+                if Page.RunModal(Page::"Contact List", Contact) = ACTION::LookupOK then begin
+                    "Participant Contact No." := Contact."No.";
+                    "Participant Name" := Contact."Name";
+                    "Participant E-mail" := Contact."E-Mail";
+                    "Phone Number" := Contact."Phone No.";
+                    if "Document No." <> '' then begin
+                        FullDocumentNo := "Document No." + '.' + "Participant Contact No.";
+
+                        TotalAmountPaid := 0;
+                        SeminarLedgerEntry.Reset();
+                        SeminarLedgerEntry.SetRange("Document No.", FullDocumentNo);
+                        if SeminarLedgerEntry.FindSet() then begin
+                            repeat
+                                TotalAmountPaid += SeminarLedgerEntry."Amount Paid";
+                            until SeminarLedgerEntry.Next() = 0;
+                        end;
+
+                        Balance := ("Seminar Price" - TotalAmountPaid);
+                        if Balance <= 0 then
+                            Message('The customer has fully paid for the seminar.');
+
+                    end;
+                end;
+            end;
+        }
+        field(27; Balance; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Balance';
+
+        }
+        field(28; "Phone Number"; Text[13])
+        {
+            Caption = 'Phone Number';
+            DataClassification = ToBeClassified;
+        }
+        field(29; "Total Deposit Amount"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Total Deposit Amount';
+
+        }
+
 
 
     }
@@ -146,9 +253,14 @@ table 50143 "CSD Seminar Receipt Header"
         CSDSEMINARSETUP: Record "CSD SEMINAR SETUP";
         NoSeriesMgt: Codeunit NoSeriesManagement;
         CSDSeminarRcpt: Record "CSD Seminar Receipt Header";
+        ContactBusinessRelation: Record "Contact Business Relation";
+        Contact: Record Contact;
+        ContactHasDifferentCompanyThanCustomer: Label 'Contact %1 %2 is related to a different company than customer %3.';
 
 
     trigger OnInsert()
+    var
+        CSDSeminarLedgEntry: Record "CSD Seminar Ledger Entry";
     begin
         if "Receipt No." = '' then begin
             CSDSEMINARSETUP.Get;
@@ -156,12 +268,14 @@ table 50143 "CSD Seminar Receipt Header"
             NoSeriesMgt.InitSeries(CSDSEMINARSETUP."Seminar Receipt Nos.", xRec."No. Series", 0D, "Receipt No.", "No. Series");//This represents the starting date for the number series. In this case, 0D means no specific start date is provided.The xRec refers to the old version of the current record (before any changes). It passes the previous value of the "No. Series" field if it exists.it generates a new seminar number using the specified number series and assigns that number to the No. field of the seminar. The series used to generate the number is also stored in the No. Series field.
         end;
 
+
     end;
 
     trigger OnModify()
     begin
         if "Seminar No." <> xRec."Seminar No." then
             UpdateFieldsFromSeminarNo();
+        // UpdateBalance();
     end;
 
 
@@ -175,12 +289,16 @@ table 50143 "CSD Seminar Receipt Header"
             Rec := CSDSeminarRcpt;
             exit(true);
         end;
+        // UpdateBalance();
     end;
 
     procedure UpdateFieldsFromSeminarNo()
     var
         CSDRegnHdr: Record "CSD Registration Header";
         CSDSEMINAR: Record "CSD SEMINAR";
+        SeminarLedgerEntry: Record "CSD Seminar Ledger Entry";
+        TotalAmountPaid: Decimal;
+        FullDocumentNo: Text[50];
     begin
         if "Seminar Registration No." <> '' then begin
             CSDRegnHdr.Reset();
@@ -204,7 +322,15 @@ table 50143 "CSD Seminar Receipt Header"
                 "Reason Code" := CSDRegnHdr."Reason Code";
                 "Posting Date" := CSDRegnHdr."Posting Date";
                 "Document Date" := CSDRegnHdr."Document Date";
+                // UpdateBalance();
             end;
         end;
     end;
+
+    // local procedure UpdateBalance()
+    // begin
+
+    //     Balance := Round(("Seminar Price" - "Total Receipt Lines"), 2);
+
+    // end;
 }
