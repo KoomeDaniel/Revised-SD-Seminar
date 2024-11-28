@@ -6,7 +6,7 @@ from datetime import datetime
 # Initialize Africa's Talking with username and API key
 africastalking.initialize(
     username='sandbox',  # Replace with your Africastalking sandbox username
-    api_key='atsk_8b7f4396108879e04e77b993d25d32304a3debc8c76c10cf3fcfa7f070d21dbc7fdec912'     # Replace with your Africastalking API key
+    api_key='Your API Key'     # Replace with your Africastalking API key
 )
 
 app = Flask(__name__)
@@ -37,8 +37,8 @@ def sms_callback():
 
     # Forward the data to the OData endpoint with authentication
     url = "http://desktop-4k864f5:7048/BC210/ODataV4/Company('CRONUS%20International%20Ltd.')/csdSMSReceived"
-    username = 'Koome'  
-    password = 'Koome@045'  
+    username = 'Your BC Username'  
+    password = 'Your BC Password'  
     print('data',data)
     print(request.form)
     print(request.method)
