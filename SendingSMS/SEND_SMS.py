@@ -4,7 +4,7 @@ import africastalking
 # Initialize Africa's Talking with username and API key
 africastalking.initialize(
     username='sandbox',  # Replace with your Africastalking sandbox username
-    api_key='atsk_8b7f4396108879e04e77b993d25d32304a3debc8c76c10cf3fcfa7f070d21dbc7fdec912'     # Replace with your Africastalking API key
+    api_key='Your API Key'     # Replace with your Africastalking API key
 )
 
 app = Flask(__name__)
